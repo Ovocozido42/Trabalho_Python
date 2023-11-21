@@ -1,8 +1,9 @@
 import pymysql
 from openpyxl import *
-import win32com.client as win32
 
-# Function to fetch data from database
+
+
+
 def fetch_data():
     connection = pymysql.connect(
         host='localhost',
@@ -22,15 +23,12 @@ def fetch_data():
 
     return rows; 
 
-# Fetch data from database
 data = fetch_data()
 
 
 listLucro = [(d[0], d[1], d[-1]) for d in data];  
 
 listMovimento = [(("9hrs as 12hrs: " , d[2]), ("13hrs as 15hrs: " , d[3]), ("16hrs as 18hrs: " , d[4]), ("19hrs as 21hrs: " , d[5]), ("22hrs as 00hrs: " , d[6])) for d in data]
-
-# ----------------------------------------------------------------------------
 
 planilha = load_workbook('Relatorio.xlsx'); 
 
@@ -50,9 +48,10 @@ for i, row in enumerate(listMovimento):
         else:
             abaMovimento.cell(row=j+6, column=i+4).value = valor;
 
-planilha.save("Relatorio.xlsx");
 
-# -----------------------------------------------------------------------------
+planilha.save("Relatorio.xlsx")
+
+import win32com.client as win32
 
 outlook = win32.Dispatch('outlook.application')
 
